@@ -1,0 +1,657 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>나지켜</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --ink:#1A1A1A; --sub:#5C5C5C; --line:#E2E0DA; --bg:#FFFFFF; --soft:#F7F6F2;
+  --food:#2E9E5B; --food-soft:#E6F4EC;
+  --water:#2F9BD0; --water-soft:#E4F3FA;
+  --workout:#E0508F; --workout-soft:#FCE9F1;
+  --bowel:#EC8420; --bowel-soft:#FDF0E2;
+  --radius:24px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;font-family:"Noto Sans KR",-apple-system,"Apple SD Gothic Neo",sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;word-break:keep-all}
+a{color:inherit}
+img,svg{display:block}
+.wrap{max-width:1200px;margin:0 auto;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
+section{padding:110px 0}
+.soft{background:var(--soft)}
+h1,h2,h3{margin:0;line-height:1.3;letter-spacing:-0.02em}
+h2{font-size:clamp(28px,4vw,40px);font-weight:800}
+p{margin:0}
+.lead{font-size:18px;color:var(--sub)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 24px;border-radius:14px;font-weight:700;font-size:15px;text-decoration:none;border:1.5px solid var(--ink);cursor:pointer;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn-dark{background:var(--ink);color:#fff}
+.btn-line{background:#fff;color:var(--ink)}
+.dot{width:12px;height:12px;border-radius:50%;flex:none}
+
+/* header */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:#fff}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.gnb{display:flex;align-items:center;justify-content:space-between;gap:16px;height:68px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:21px;text-decoration:none}
+.logo-mark{width:34px;height:34px;border-radius:10px;display:grid;grid-template-columns:1fr 1fr;gap:3px;padding:5px;background:var(--ink)}
+.logo-mark i{border-radius:3px}
+.nav{display:flex;gap:2px}
+.nav a{padding:10px 14px;border-radius:999px;text-decoration:none;font-size:15px;font-weight:500;color:var(--sub)}
+.nav a:hover,.nav a.on{color:var(--ink);background:var(--soft)}
+.gnb .btn{min-height:42px;padding:0 18px;font-size:14px;border-radius:999px}
+.menu-btn{display:none;width:44px;height:44px;border:0;background:none;cursor:pointer}
+@media (max-width:860px){
+  .nav{display:none;position:absolute;top:68px;left:0;right:0;flex-direction:column;background:#fff;border-bottom:1px solid var(--line);padding:8px 16px 16px}
+  .nav.open{display:flex}
+  .nav a{padding:14px}
+  .menu-btn{display:block}
+  .gnb .btn{display:none}
+}
+
+/* hero */
+.hero{background:linear-gradient(180deg,var(--soft),#fff);padding:90px 0 80px}
+.hero-grid{display:flex;flex-wrap:wrap;align-items:center;gap:56px}
+.hero-copy{flex:1 1 460px;display:flex;flex-direction:column;gap:22px}
+.eyebrow{font-size:15px;font-weight:700;color:var(--sub)}
+.hero h1{font-size:clamp(36px,5.4vw,58px);font-weight:800}
+.hero h1 em{font-style:normal;background:linear-gradient(transparent 62%,var(--food-soft) 62%)}
+.store{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}
+.hero-phone{flex:1 1 360px;display:flex;justify-content:center}
+.phone{width:310px;border:11px solid var(--ink);border-radius:46px;background:#fff;padding:22px 16px 18px;box-shadow:0 30px 60px -20px rgba(0,0,0,.25)}
+.phone-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.phone-top b{font-size:17px}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.cal .wd{font-size:10px;text-align:center;color:var(--sub);padding-bottom:2px}
+.cal .c{min-height:40px;border-radius:7px;border:1px solid var(--line);padding:3px 4px;display:flex;flex-direction:column;gap:3px}
+.cal .c span{font-size:9px}
+.cal .c.today{border:2px solid var(--ink)}
+.cal .c.empty{border-color:transparent}
+.cal .ds{display:flex;flex-wrap:wrap;gap:2px}
+.cal .ds i{width:6px;height:6px;border-radius:50%}
+.phone-cta{margin-top:14px;display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.phone-cta div{border-radius:12px;padding:10px 0;text-align:center;font-size:11px;font-weight:700}
+.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:64px}
+.chip{display:inline-flex;align-items:center;gap:10px;min-height:46px;padding:0 22px;border-radius:999px;background:#fff;border:1px solid var(--line);text-decoration:none;font-weight:600}
+.chip:hover{border-color:var(--ink)}
+
+/* highlights */
+.row-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:36px}
+.arrows{display:flex;gap:8px}
+.arrow{width:46px;height:46px;border-radius:50%;border:1.5px solid var(--ink);background:#fff;cursor:pointer;font-size:20px;line-height:1}
+.track{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px;scrollbar-width:none}
+.track::-webkit-scrollbar{display:none}
+.hl{flex:0 0 min(300px,80%);scroll-snap-align:start;border-radius:var(--radius);padding:26px;display:flex;flex-direction:column;gap:14px;min-height:340px;text-decoration:none}
+.hl .art{flex:1;border-radius:16px;background:#fff;display:flex;align-items:center;justify-content:center;padding:16px}
+.hl h3{font-size:20px}
+.hl p{font-size:14px;color:var(--sub)}
+.dots{display:flex;justify-content:center;gap:8px;margin-top:26px}
+.dots button{width:9px;height:9px;border-radius:5px;border:0;background:#CFCDC6;padding:0;cursor:pointer;transition:width .2s}
+.dots button.on{width:26px;background:var(--ink)}
+
+/* category */
+.cat-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:36px}
+.cat-head>div{flex:1 1 520px;display:flex;flex-direction:column;gap:16px}
+.tag{display:inline-flex;align-self:flex-start;align-items:center;gap:8px;font-weight:800;font-size:15px}
+.more{font-weight:700;text-decoration:none;border-bottom:2px solid currentColor;padding-bottom:2px}
+.visual{border-radius:32px;min-height:440px;display:flex;align-items:center;justify-content:center;padding:48px 24px;margin-bottom:28px;position:relative;overflow:hidden}
+.mock{background:#fff;border-radius:22px;padding:24px;width:min(380px,100%);box-shadow:0 20px 50px -24px rgba(0,0,0,.25);display:flex;flex-direction:column;gap:14px}
+.mock h4{margin:0;font-size:16px}
+.mock .row{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-radius:12px;background:var(--soft);font-size:14px}
+.pill{font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px}
+.cards{display:flex;flex-wrap:wrap;gap:20px}
+.card{flex:1 1 260px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:10px}
+.card .k{font-size:13px;font-weight:700}
+.card h3{font-size:19px}
+.card p{font-size:14px;color:var(--sub);flex:1}
+.card button{align-self:flex-start;margin-top:6px;min-height:44px;padding:0 18px;border-radius:999px;border:1.5px solid var(--ink);background:#fff;font:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.card button:hover{background:var(--ink);color:#fff}
+.glasses{display:flex;gap:8px;flex-wrap:wrap}
+.glass{width:30px;height:40px;border:2px solid var(--water);border-radius:4px 4px 8px 8px;position:relative;overflow:hidden}
+.glass.f::after{content:"";position:absolute;left:0;right:0;bottom:0;height:70%;background:var(--water)}
+.watch{width:190px;height:220px;border-radius:52px;background:var(--ink);display:flex;align-items:center;justify-content:center;box-shadow:0 20px 50px -20px rgba(0,0,0,.4)}
+.watch-face{width:150px;height:170px;border-radius:38px;background:#000;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.states{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.states div{border:1.5px solid var(--line);border-radius:14px;padding:14px;text-align:center;font-size:14px;font-weight:600}
+.states .sel{border-color:var(--bowel);background:var(--bowel-soft)}
+.video{display:flex;flex-wrap:wrap;gap:32px;align-items:center;margin-top:28px;border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+.video-box{flex:2 1 420px;min-height:280px;border-radius:18px;background:var(--ink);color:#fff;display:flex;flex-direction:column;gap:12px;align-items:center;justify-content:center;font-size:14px}
+.video>div:last-child{flex:1 1 260px;display:flex;flex-direction:column;gap:10px}
+
+/* calendar section */
+.center{text-align:center;display:flex;flex-direction:column;align-items:center;gap:16px;margin-bottom:44px}
+.board{display:flex;flex-wrap:wrap;gap:24px}
+.big{flex:2 1 560px;min-width:0;border:1px solid var(--line);border-radius:var(--radius);padding:28px}
+.big-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend .dot{width:10px;height:10px}
+.cal.lg{gap:6px}
+.cal.lg .wd{font-size:12px}
+.cal.lg .c{min-height:78px;border-radius:12px;padding:7px;gap:6px}
+.cal.lg .c span{font-size:13px;font-weight:600}
+.cal.lg .ds{gap:4px}
+.cal.lg .ds i{width:11px;height:11px}
+.side{flex:1 1 300px;min-width:0;display:flex;flex-direction:column;gap:24px}
+.panel{border:1px solid var(--line);border-radius:var(--radius);padding:26px;display:flex;flex-direction:column;gap:12px}
+.panel .k{font-size:13px;color:var(--sub);font-weight:600}
+.bars{height:150px;display:flex;align-items:flex-end;gap:10px;border-bottom:1px solid var(--line)}
+.bars div{flex:1;border-radius:6px 6px 0 0;background:var(--food)}
+.bar-l{display:flex;justify-content:space-between;font-size:12px;color:var(--sub)}
+.insight{display:flex;flex-direction:column;gap:8px}
+.insight .ln{display:flex;align-items:center;gap:10px;font-size:13px}
+.insight .ln b{width:46px;flex:none;font-weight:600}
+.insight .ln div{height:10px;border-radius:5px}
+
+/* persona */
+.persona{flex:1 1 260px;background:#fff;border-radius:var(--radius);padding:28px;display:flex;flex-direction:column;gap:14px;border:1px solid var(--line)}
+.face{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+
+/* download */
+.dl{background:var(--ink);color:#fff;text-align:center}
+.dl .center{margin:0}
+.dl .lead{color:#CFCFCF}
+.dl .btn-line{background:transparent;color:#fff;border-color:#fff}
+.dl .btn-dark{background:#fff;color:var(--ink);border-color:#fff}
+.qr{width:100px;height:100px;border-radius:14px;background:#fff;padding:10px;display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.qr i{background:var(--ink);border-radius:1px}
+.qr i.w{background:#fff}
+
+/* device / privacy */
+.duo{display:flex;flex-wrap:wrap;gap:24px}
+.duo .panel{flex:1 1 460px;flex-direction:row;flex-wrap:wrap;align-items:center;gap:24px;padding:32px}
+.duo .ic{width:120px;height:120px;border-radius:24px;display:flex;align-items:center;justify-content:center;flex:none}
+.duo .tx{flex:1 1 220px;display:flex;flex-direction:column;gap:10px}
+
+/* faq */
+.faq{max-width:880px}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:28px 0}
+.tabs button{min-height:44px;padding:0 20px;border-radius:999px;border:1.5px solid var(--line);background:#fff;font:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.qa{border-top:2px solid var(--ink)}
+.qa details{border-bottom:1px solid var(--line)}
+.qa summary{list-style:none;cursor:pointer;padding:22px 44px 22px 4px;font-size:17px;font-weight:700;position:relative}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary::after{content:"+";position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:24px;font-weight:400}
+.qa details[open] summary::after{content:"−"}
+.qa details p{padding:0 4px 22px;color:var(--sub);font-size:15px}
+.qa .cat{font-size:12px;font-weight:700;margin-right:10px;padding:3px 9px;border-radius:999px;background:var(--soft);vertical-align:2px}
+
+/* footer */
+footer{background:var(--soft);border-top:1px solid var(--line);padding:48px 0 56px;font-size:13px;color:var(--sub)}
+footer ul{margin:0 0 28px;padding-left:18px;display:flex;flex-direction:column;gap:6px}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;padding-top:22px;border-top:1px solid var(--line)}
+.foot nav{display:flex;flex-wrap:wrap;gap:18px}
+.foot a{text-decoration:none}
+.foot a:hover{color:var(--ink)}
+
+/* modal */
+dialog{border:0;border-radius:24px;padding:0;width:min(520px,92vw);box-shadow:0 30px 80px -20px rgba(0,0,0,.4)}
+dialog::backdrop{background:rgba(20,20,20,.5)}
+.dlg{padding:32px;display:flex;flex-direction:column;gap:14px}
+.dlg .k{font-weight:800;font-size:14px}
+.dlg h3{font-size:24px}
+.dlg p{color:var(--sub)}
+.dlg .close{align-self:flex-end;margin-top:8px}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media (max-width:600px){section{padding:80px 0}.visual{min-height:340px;border-radius:24px}.cal.lg .c{min-height:54px;padding:4px}.cal.lg .c span{font-size:11px}.cal.lg .ds i{width:7px;height:7px}.big{padding:18px}}
+</style>
+
+<header>
+  <div class="wrap gnb">
+    <a href="#top" class="logo" aria-label="나지켜 홈">
+      <span class="logo-mark" aria-hidden="true"><i style="background:var(--food)"></i><i style="background:var(--water)"></i><i style="background:var(--workout)"></i><i style="background:var(--bowel)"></i></span>
+      나지켜
+    </a>
+    <nav class="nav" id="nav" aria-label="섹션 바로가기">
+      <a href="#food">식사</a>
+      <a href="#water">물</a>
+      <a href="#workout">운동</a>
+      <a href="#bowel">배변</a>
+      <a href="#calendar">달력·리포트</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a href="#download" class="btn btn-dark">앱 다운로드</a>
+    <button class="menu-btn" id="menuBtn" aria-label="메뉴 열기" aria-expanded="false" aria-controls="nav">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="margin:auto"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- 01 히어로 -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">20~30대를 위한 건강 달력</span>
+        <h1>배달 앱 대신,<br><em>내 몸 달력</em>부터 열어보세요</h1>
+        <p class="lead">식사, 물, 운동, 배변. 매일 남긴 작은 기록이 색으로 쌓여 한 달의 내 몸이 한눈에 보여요. 거창한 다짐 없이, 오늘 하루 체크하는 것부터 시작해요.</p>
+        <div class="store">
+          <a href="#download" class="btn btn-dark">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.4 12.6c0-2.6 2.1-3.8 2.2-3.9-1.2-1.8-3.1-2-3.7-2-1.6-.2-3.1.9-3.9.9-.8 0-2-.9-3.4-.9-1.7 0-3.3 1-4.2 2.6-1.8 3.1-.5 7.7 1.3 10.2.9 1.2 1.9 2.6 3.2 2.6 1.3-.1 1.8-.8 3.3-.8s2 .8 3.4.8c1.4 0 2.3-1.3 3.1-2.5 1-1.4 1.4-2.8 1.4-2.9 0 0-2.7-1-2.7-4.1zM13.9 4.9c.7-.9 1.2-2 1.1-3.2-1 0-2.3.7-3 1.6-.7.8-1.2 2-1.1 3.1 1.1.1 2.3-.6 3-1.5z"/></svg>
+            App Store
+          </a>
+          <a href="#download" class="btn btn-line">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 2.5v19l10-9.5L4 2.5zm11.4 10.8L6.6 21.7l11.2-6.4-2.4-2zm0-2.6l2.4-2L6.6 2.3l8.8 8.4zm3.7-1.4L21 10.6c.7.5.7 1.4 0 1.9l-1.9 1.3-2.6-2.1 2.6-2.4z"/></svg>
+            Google Play
+          </a>
+        </div>
+      </div>
+      <div class="hero-phone">
+        <div class="phone" role="img" aria-label="나지켜 앱 월간 달력 화면">
+          <div class="phone-top"><b>2026년 11월</b><span style="font-size:12px;color:var(--sub)">내 달력</span></div>
+          <div class="cal" id="miniCal"></div>
+          <div class="phone-cta">
+            <div style="background:var(--food-soft);color:#1E6E3F">식사</div>
+            <div style="background:var(--water-soft);color:#1A6A90">물</div>
+            <div style="background:var(--workout-soft);color:#A4235C">운동</div>
+            <div style="background:var(--bowel-soft);color:#A3540C">배변</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="chips">
+      <a href="#food" class="chip"><span class="dot" style="background:var(--food)"></span>식사</a>
+      <a href="#water" class="chip"><span class="dot" style="background:var(--water)"></span>물</a>
+      <a href="#workout" class="chip"><span class="dot" style="background:var(--workout)"></span>운동</a>
+      <a href="#bowel" class="chip"><span class="dot" style="background:var(--bowel)"></span>배변</a>
+    </div>
+  </div>
+</section>
+
+<!-- 02 하이라이트 -->
+<section>
+  <div class="wrap">
+    <div class="row-head reveal">
+      <h2>한눈에 보는 나지켜</h2>
+      <div class="arrows">
+        <button class="arrow" id="prev" aria-label="이전 기능">‹</button>
+        <button class="arrow" id="next" aria-label="다음 기능">›</button>
+      </div>
+    </div>
+    <div class="track" id="track">
+      <a href="#calendar" class="hl" style="background:var(--food-soft)">
+        <div class="art"><div class="cal" id="hlCal" style="width:100%" aria-hidden="true"></div></div>
+        <h3>색으로 채워지는 월간 달력</h3>
+        <p>기록할수록 칸이 채워져요. 한 달의 습관이 그림처럼 보여요.</p>
+      </a>
+      <a href="#food" class="hl" style="background:var(--water-soft)">
+        <div class="art"><svg width="90" height="90" viewBox="0 0 90 90" fill="none" aria-hidden="true"><circle cx="45" cy="45" r="40" fill="var(--water-soft)"/><circle cx="45" cy="45" r="26" fill="var(--water)"/><path d="M34 45l8 8 15-16" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>버튼 한 번으로 끝나는 기록</h3>
+        <p>입력은 최소로. 오늘 있었던 일만 톡 눌러 남겨요.</p>
+      </a>
+      <a href="#workout" class="hl" style="background:var(--workout-soft)">
+        <div class="art"><svg width="80" height="96" viewBox="0 0 80 96" fill="none" aria-hidden="true"><rect x="22" y="2" width="36" height="16" rx="4" fill="#CFCDC6"/><rect x="22" y="78" width="36" height="16" rx="4" fill="#CFCDC6"/><rect x="10" y="14" width="60" height="68" rx="18" fill="var(--ink)"/><circle cx="40" cy="48" r="18" stroke="var(--workout)" stroke-width="6" stroke-dasharray="80 120" stroke-linecap="round" transform="rotate(-90 40 48)"/></svg></div>
+        <h3>애플워치 운동 자동 연동</h3>
+        <p>워치로 운동하면 따로 입력하지 않아도 달력에 표시돼요.</p>
+      </a>
+      <a href="#calendar" class="hl" style="background:var(--bowel-soft)">
+        <div class="art"><div style="display:flex;align-items:flex-end;gap:8px;height:90px" aria-hidden="true"><i style="width:16px;height:40%;background:var(--bowel);border-radius:4px"></i><i style="width:16px;height:70%;background:var(--bowel);border-radius:4px"></i><i style="width:16px;height:55%;background:var(--bowel);border-radius:4px"></i><i style="width:16px;height:90%;background:var(--bowel);border-radius:4px"></i><i style="width:16px;height:65%;background:var(--bowel);border-radius:4px"></i></div></div>
+        <h3>주간 · 월간 리포트</h3>
+        <p>한 주를 돌아보는 요약으로 다음 주 목표를 세워요.</p>
+      </a>
+    </div>
+    <div class="dots" id="dots" role="tablist" aria-label="슬라이드 선택"></div>
+  </div>
+</section>
+
+<!-- 03 식사 -->
+<section id="food" class="soft" style="border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="cat-head reveal">
+      <div>
+        <span class="tag"><span class="dot" style="background:var(--food)"></span>식사</span>
+        <h2>이번 달 배달, 몇 번 시켰는지<br>달력이 먼저 알려줘요</h2>
+        <p class="lead">배달·인스턴트를 먹은 날을 초록색으로 체크해요. 쌓인 기록을 보면 바쁜 요일, 야근한 주처럼 내 식습관의 패턴이 보이기 시작해요.</p>
+      </div>
+      <a href="#food-cards" class="more" style="color:#1E6E3F">자세히 알아보기 →</a>
+    </div>
+    <div class="visual reveal" style="background:var(--food-soft)">
+      <div class="mock" role="img" aria-label="오늘의 식사 기록 화면 예시">
+        <h4>오늘의 식사</h4>
+        <div class="row">아침 <span class="pill" style="background:#fff">집밥</span></div>
+        <div class="row">점심 <span class="pill" style="background:var(--food);color:#fff">배달</span></div>
+        <div class="row">저녁 <span class="pill" style="background:var(--food-soft);color:#1E6E3F">인스턴트</span></div>
+        <div class="row" style="background:var(--ink);color:#fff">이번 주 배달·인스턴트 <b>4회</b></div>
+      </div>
+    </div>
+    <div class="cards" id="food-cards">
+      <div class="card reveal"><span class="k" style="color:#1E6E3F">빈도 기록</span><h3>배달·인스턴트 한 번에 체크</h3><p>끼니마다 집밥, 배달, 인스턴트 중 하나만 고르면 끝이에요.</p><button data-cat="식사" data-color="#1E6E3F" data-title="배달·인스턴트 한 번에 체크" data-body="메뉴명이나 칼로리를 적지 않아도 돼요. 끼니별로 어떤 방식으로 먹었는지만 선택하면 달력에 초록색으로 표시돼요.">자세히 보기 +</button></div>
+      <div class="card reveal"><span class="k" style="color:#1E6E3F">패턴 보기</span><h3>한 달 식습관 패턴</h3><p>배달이 몰리는 요일과 시기를 달력에서 바로 확인해요.</p><button data-cat="식사" data-color="#1E6E3F" data-title="한 달 식습관 패턴" data-body="초록색이 몰린 칸을 보면 배달이 잦은 요일과 주간이 드러나요. 패턴을 알면 줄일 타이밍도 보여요.">자세히 보기 +</button></div>
+      <div class="card reveal"><span class="k" style="color:#1E6E3F">목표</span><h3>배달 줄이기 목표 설정</h3><p>이번 주 배달 횟수 목표를 정하고 달성 여부를 확인해요.</p><button data-cat="식사" data-color="#1E6E3F" data-title="배달 줄이기 목표 설정" data-body="무리한 목표 대신 지난주보다 한 번 줄이기처럼 작은 목표를 세워보세요. 주간 리포트에서 결과를 확인할 수 있어요.">자세히 보기 +</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 물 -->
+<section id="water">
+  <div class="wrap">
+    <div class="cat-head reveal">
+      <div>
+        <span class="tag"><span class="dot" style="background:var(--water)"></span>물</span>
+        <h2>오늘 물 몇 잔?<br>탭 한 번이면 끝</h2>
+        <p class="lead">한 잔 마실 때마다 한 번 탭. 하늘색 칸이 채워지는 걸 보면 자연스럽게 한 잔 더 마시게 돼요.</p>
+      </div>
+      <a href="#water-cards" class="more" style="color:#1A6A90">자세히 알아보기 →</a>
+    </div>
+    <div class="visual reveal" style="background:var(--water-soft)">
+      <div class="mock" role="img" aria-label="음수량 기록 화면 예시">
+        <h4>오늘 마신 물</h4>
+        <div class="glasses"><i class="glass f"></i><i class="glass f"></i><i class="glass f"></i><i class="glass f"></i><i class="glass f"></i><i class="glass"></i><i class="glass"></i><i class="glass"></i></div>
+        <div class="row"><span>목표까지</span><b style="color:#1A6A90">3잔 남았어요</b></div>
+        <div style="min-height:48px;border-radius:14px;background:var(--water);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center">+ 한 잔 마셨어요</div>
+      </div>
+    </div>
+    <div class="cards" id="water-cards">
+      <div class="card reveal"><span class="k" style="color:#1A6A90">빠른 기록</span><h3>탭 한 번 음수량 기록</h3><p>마실 때마다 버튼 한 번. 잔 단위로 간단하게 쌓여요.</p><button data-cat="물" data-color="#1A6A90" data-title="탭 한 번 음수량 기록" data-body="ml를 계산할 필요 없이 한 잔 단위로 기록해요. 잘못 눌렀다면 바로 취소할 수 있어요.">자세히 보기 +</button></div>
+      <div class="card reveal"><span class="k" style="color:#1A6A90">목표</span><h3>하루 목표량 설정</h3><p>나에게 맞는 하루 목표 잔 수를 정해두세요.</p><button data-cat="물" data-color="#1A6A90" data-title="하루 목표량 설정" data-body="목표를 채운 날은 달력 칸이 하늘색으로 진하게 표시돼 한 달 동안 얼마나 꾸준했는지 보여요.">자세히 보기 +</button></div>
+      <div class="card reveal"><span class="k" style="color:#1A6A90">알림</span><h3>물 마시기 알림</h3><p>바쁜 날에도 잊지 않도록 원하는 시간에 알려드려요.</p><button data-cat="물" data-color="#1A6A90" data-title="물 마시기 알림" data-body="업무 시간대에 맞춰 알림 간격과 시간대를 정할 수 있어요. 목표를 다 채우면 그날 알림은 멈춰요.">자세히 보기 +</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 운동 -->
+<section id="workout" class="soft" style="border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="cat-head reveal">
+      <div>
+        <span class="tag"><span class="dot" style="background:var(--workout)"></span>운동</span>
+        <h2>워치만 차면,<br>운동한 날이 저절로 칠해져요</h2>
+        <p class="lead">애플워치에 기록된 운동을 불러와 핑크색으로 표시해요. 따로 입력하지 않아도 꾸준히 움직인 날들이 달력에 남아요.</p>
+      </div>
+      <a href="#workout-cards" class="more" style="color:#A4235C">자세히 알아보기 →</a>
+    </div>
+    <div class="visual reveal" style="background:var(--workout-soft);gap:32px;flex-wrap:wrap">
+      <div class="watch" role="img" aria-label="애플워치 운동 기록 화면 예시">
+        <div class="watch-face">
+          <svg width="70" height="70" viewBox="0 0 70 70" fill="none" aria-hidden="true"><circle cx="35" cy="35" r="28" stroke="#3A1A28" stroke-width="8"/><circle cx="35" cy="35" r="28" stroke="var(--workout)" stroke-width="8" stroke-dasharray="130 176" stroke-linecap="round" transform="rotate(-90 35 35)"/></svg>
+          <b style="font-size:22px">32분</b><span style="font-size:11px;color:#BBB">오늘의 걷기</span>
+        </div>
+      </div>
+      <div class="mock" style="width:min(300px,100%)">
+        <h4>이번 주 운동</h4>
+        <div class="row">월 · 걷기 <span class="pill" style="background:var(--workout);color:#fff">완료</span></div>
+        <div class="row">수 · 러닝 <span class="pill" style="background:var(--workout);color:#fff">완료</span></div>
+        <div class="row">목 · 걷기 <span class="pill" style="background:var(--workout-soft);color:#A4235C">진행 중</span></div>
+      </div>
+    </div>
+    <div class="cards" id="workout-cards">
+      <div class="card reveal"><span class="k" style="color:#A4235C">자동 연동</span><h3>애플워치 운동 자동 기록</h3><p>워치에서 기록한 운동이 앱으로 자동으로 들어와요.</p><button data-cat="운동" data-color="#A4235C" data-title="애플워치 운동 자동 기록" data-body="건강 앱 데이터 접근을 허용하면 워치에서 기록된 운동 종류와 시간이 나지켜 달력에 자동으로 표시돼요.">자세히 보기 +</button></div>
+      <div class="card reveal"><span class="k" style="color:#A4235C">달력 표시</span><h3>운동한 날 한눈에</h3><p>움직인 날이 핑크색으로 칠해져 빈 칸이 바로 보여요.</p><button data-cat="운동" data-color="#A4235C" data-title="운동한 날 한눈에" data-body="한 달 달력에서 운동한 날과 쉬어간 날이 구분돼요. 워치 없이 운동한 날은 직접 체크할 수도 있어요.">자세히 보기 +</button></div>
+      <div class="card reveal"><span class="k" style="color:#A4235C">꾸준함</span><h3>연속 기록 확인</h3><p>며칠째 이어가고 있는지 보면서 동기를 이어가요.</p><button data-cat="운동" data-color="#A4235C" data-title="연속 기록 확인" data-body="연속으로 운동한 날 수를 보여줘요. 끊기더라도 다시 시작하기 쉽도록 이번 달 누적 일수도 함께 보여드려요.">자세히 보기 +</button></div>
+    </div>
+    <div class="video reveal">
+      <div class="video-box" role="img" aria-label="사용 영상 자리">
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" aria-hidden="true"><circle cx="32" cy="32" r="30" stroke="#fff" stroke-width="2"/><path d="M26 21l17 11-17 11z" fill="#fff"/></svg>
+        사용 영상 준비 중
+      </div>
+      <div>
+        <h3 style="font-size:24px">워치로 운동 기록이 쌓이는 방법</h3>
+        <p style="color:var(--sub)">워치 연동부터 달력에 표시되기까지, 짧은 영상으로 확인해 보세요.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 배변 -->
+<section id="bowel">
+  <div class="wrap">
+    <div class="cat-head reveal">
+      <div>
+        <span class="tag"><span class="dot" style="background:var(--bowel)"></span>배변</span>
+        <h2>말하기 애매한 장 건강,<br>달력엔 편하게 남겨요</h2>
+        <p class="lead">오늘 장 상태를 주황색으로 가볍게 체크해요. 식사·물 기록과 나란히 보면 내 몸의 흐름이 더 잘 보여요.</p>
+      </div>
+      <a href="#bowel-cards" class="more" style="color:#A3540C">자세히 알아보기 →</a>
+    </div>
+    <div class="visual reveal" style="background:var(--bowel-soft)">
+      <div class="mock" role="img" aria-label="배변 상태 선택 화면 예시">
+        <h4>오늘 장 상태는 어땠나요?</h4>
+        <div class="states">
+          <div class="sel">시원해요</div>
+          <div>보통이에요</div>
+          <div>불편해요</div>
+          <div>오늘은 패스</div>
+        </div>
+        <div style="min-height:48px;border-radius:14px;background:var(--bowel);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center">기록하기</div>
+      </div>
+    </div>
+    <div class="cards" id="bowel-cards">
+      <div class="card reveal"><span class="k" style="color:#A3540C">간단 기록</span><h3>상태를 골라서 한 번에</h3><p>자세한 설명 없이 오늘 느낌만 선택하면 돼요.</p><button data-cat="배변" data-color="#A3540C" data-title="상태를 골라서 한 번에" data-body="민망한 입력 없이 네 가지 상태 중 하나만 고르면 끝이에요. 기록은 나만 볼 수 있어요.">자세히 보기 +</button></div>
+      <div class="card reveal"><span class="k" style="color:#A3540C">흐름 보기</span><h3>식사·물 기록과 함께 보기</h3><p>배달이 많던 주, 물을 덜 마신 날과 나란히 비교해요.</p><button data-cat="배변" data-color="#A3540C" data-title="식사·물 기록과 함께 보기" data-body="한 달 달력에서 주황색 기록을 초록·하늘색 기록과 함께 보면 생활 습관과 장 상태의 관계를 스스로 살펴볼 수 있어요.">자세히 보기 +</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 달력 & 리포트 -->
+<section id="calendar" class="soft" style="border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="center reveal">
+      <h2>네 가지 색이 모이면,<br>한 달의 내 몸이 보여요</h2>
+      <p class="lead" style="max-width:620px">하루하루의 기록이 달력 한 장에 모여요. 주간 리포트로 지난 일주일을 돌아보고, 다음 주에 바꿔볼 한 가지를 찾아보세요.</p>
+    </div>
+    <div class="board">
+      <div class="big reveal" style="background:#fff">
+        <div class="big-head">
+          <b style="font-size:20px">2026년 11월</b>
+          <div class="legend">
+            <span><i class="dot" style="background:var(--food)"></i>식사</span>
+            <span><i class="dot" style="background:var(--water)"></i>물</span>
+            <span><i class="dot" style="background:var(--workout)"></i>운동</span>
+            <span><i class="dot" style="background:var(--bowel)"></i>배변</span>
+          </div>
+        </div>
+        <div class="cal lg" id="bigCal" role="img" aria-label="11월 기록 달력 예시"></div>
+      </div>
+      <div class="side">
+        <div class="panel reveal" style="background:#fff">
+          <span class="k">주간 리포트</span>
+          <h3 style="font-size:20px">요일별 배달·인스턴트</h3>
+          <div class="bars" role="img" aria-label="요일별 배달 횟수 막대그래프 예시">
+            <div style="height:30%"></div><div style="height:55%"></div><div style="height:25%"></div><div style="height:80%"></div><div style="height:60%"></div><div style="height:95%"></div><div style="height:40%"></div>
+          </div>
+          <div class="bar-l"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+        </div>
+        <div class="panel reveal" style="background:#fff">
+          <span class="k">연관 인사이트</span>
+          <h3 style="font-size:20px">배달이 많은 주, 장 상태는?</h3>
+          <div class="insight" role="img" aria-label="항목 간 비교 예시">
+            <div class="ln"><b>식사</b><div style="width:80%;background:var(--food)"></div></div>
+            <div class="ln"><b>물</b><div style="width:45%;background:var(--water)"></div></div>
+            <div class="ln"><b>배변</b><div style="width:35%;background:var(--bowel)"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 추천 대상 -->
+<section>
+  <div class="wrap">
+    <h2 class="reveal" style="margin-bottom:36px">이런 분께 추천해요</h2>
+    <div class="cards">
+      <div class="persona reveal"><div class="face" style="background:var(--food-soft)"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1E6E3F" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 11h18M5 11a7 7 0 0 0 14 0M12 4v3"/></svg></div><h3 style="font-size:19px">자취 중이라 배달이 잦은 직장인</h3><p style="color:var(--sub);font-size:15px">퇴근하면 손이 먼저 배달 앱으로 가는 분, 일단 몇 번인지부터 세어봐요.</p></div>
+      <div class="persona reveal"><div class="face" style="background:var(--workout-soft)"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#A4235C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="14" cy="4" r="2"/><path d="M8 21l3-6 3 2v4M6 11l4-3 4 2 3 3"/></svg></div><h3 style="font-size:19px">운동 습관을 만들고 싶은 사람</h3><p style="color:var(--sub);font-size:15px">작심삼일이 걱정이라면, 칠해진 칸이 쌓이는 걸 보는 것부터 시작해요.</p></div>
+      <div class="persona reveal"><div class="face" style="background:var(--water-soft)"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1A6A90" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z"/></svg></div><h3 style="font-size:19px">물 마시는 걸 자꾸 잊는 사람</h3><p style="color:var(--sub);font-size:15px">커피만 마시다 하루가 끝난다면, 알림이 대신 챙겨드려요.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 다운로드 -->
+<section id="download" class="dl">
+  <div class="wrap">
+    <div class="center reveal">
+      <h2>오늘부터 내 몸 달력, 나지켜</h2>
+      <p class="lead">첫 기록은 지금 마신 물 한 잔이면 충분해요.</p>
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:16px;margin-top:12px">
+        <a href="#" class="btn btn-dark">App Store</a>
+        <a href="#" class="btn btn-line">Google Play</a>
+        <div class="qr" id="qr" role="img" aria-label="앱 다운로드 QR 코드 자리"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 기기 / 11 개인정보 -->
+<section>
+  <div class="wrap duo">
+    <div class="panel reveal">
+      <div class="ic" style="background:var(--workout-soft)"><svg width="54" height="64" viewBox="0 0 54 64" fill="none" aria-hidden="true"><rect x="14" y="0" width="26" height="12" rx="3" fill="#CFCDC6"/><rect x="14" y="52" width="26" height="12" rx="3" fill="#CFCDC6"/><rect x="5" y="9" width="44" height="46" rx="13" fill="var(--ink)"/><circle cx="27" cy="32" r="11" stroke="var(--workout)" stroke-width="4"/></svg></div>
+      <div class="tx">
+        <span class="k" style="font-size:13px;color:var(--sub);font-weight:600">함께 쓰면 좋은 기기</span>
+        <h3 style="font-size:22px">애플워치와 함께라면 더 쉽게</h3>
+        <p style="color:var(--sub);font-size:15px">워치에서 기록한 운동이 자동으로 들어와 기록할 일이 하나 줄어요.</p>
+        <a href="#faq" class="more" style="align-self:flex-start;font-size:14px">연동 관련 질문 보기 →</a>
+      </div>
+    </div>
+    <div class="panel reveal">
+      <div class="ic" style="background:var(--soft)"><svg width="54" height="54" viewBox="0 0 56 56" fill="none" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M28 6l18 7v14c0 12-8 20-18 23-10-3-18-11-18-23V13z"/><path d="M20 28l6 6 11-12"/></svg></div>
+      <div class="tx">
+        <span class="k" style="font-size:13px;color:var(--sub);font-weight:600">개인정보 보호</span>
+        <h3 style="font-size:22px">내 기록은 나만 봐요</h3>
+        <p style="color:var(--sub);font-size:15px">식습관과 장 건강처럼 민감한 기록일수록 안전하게. 동의 없이 다른 사람에게 공유되지 않아요.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 FAQ -->
+<section id="faq" style="border-top:1px solid var(--line)">
+  <div class="wrap faq">
+    <h2 class="reveal">자주 묻는 질문</h2>
+    <div class="tabs" role="tablist" aria-label="FAQ 카테고리" id="tabs">
+      <button role="tab" aria-selected="true" data-f="all">전체</button>
+      <button role="tab" aria-selected="false" data-f="food">식사</button>
+      <button role="tab" aria-selected="false" data-f="water">물</button>
+      <button role="tab" aria-selected="false" data-f="workout">운동</button>
+      <button role="tab" aria-selected="false" data-f="bowel">배변</button>
+      <button role="tab" aria-selected="false" data-f="etc">기타</button>
+    </div>
+    <div class="qa" id="qa">
+      <details data-c="etc" open><summary><span class="cat">기타</span>나지켜는 무료인가요?</summary><p>기본 기록 기능은 무료로 이용할 수 있도록 준비하고 있어요. 자세한 내용은 출시 공지에서 안내드릴게요.</p></details>
+      <details data-c="workout"><summary><span class="cat">운동</span>애플워치가 없어도 쓸 수 있나요?</summary><p>네. 워치가 없어도 운동한 날을 직접 체크할 수 있어요. 워치를 연동하면 운동 기록이 자동으로 들어와 더 편해져요.</p></details>
+      <details data-c="food"><summary><span class="cat">식사</span>음식 이름이나 칼로리도 적어야 하나요?</summary><p>아니요. 끼니별로 집밥, 배달, 인스턴트 중 하나만 고르면 돼요. 부담 없이 오래 기록하는 것을 목표로 만들었어요.</p></details>
+      <details data-c="water"><summary><span class="cat">물</span>커피나 차도 물로 기록하나요?</summary><p>물 기록은 순수한 물 기준으로 하는 것을 권해요. 다른 음료 기록 방식은 사용자 의견을 듣고 정해갈 예정이에요.</p></details>
+      <details data-c="bowel"><summary><span class="cat">배변</span>배변 기록은 다른 사람에게 보이나요?</summary><p>아니요. 모든 기록은 본인만 볼 수 있어요.</p></details>
+      <details data-c="etc"><summary><span class="cat">기타</span>기록을 깜빡한 날은 어떻게 하나요?</summary><p>달력에서 지난 날짜를 눌러 나중에 기록할 수 있어요.</p></details>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- 13 유의사항 & 푸터 -->
+<footer>
+  <div class="wrap">
+    <ul>
+      <li>나지켜는 생활 습관 기록용 앱이며, 질병의 진단이나 치료 목적으로 사용할 수 없습니다. 건강이 걱정된다면 전문가와 상담하세요.</li>
+      <li>애플워치 운동 연동은 건강 데이터 접근 허용이 필요합니다.</li>
+      <li>페이지의 화면은 이해를 돕기 위한 예시로, 실제 앱 화면과 다를 수 있습니다.</li>
+    </ul>
+    <div class="foot">
+      <b style="color:var(--ink);font-size:15px">나지켜</b>
+      <nav aria-label="하단 메뉴"><a href="#">이용약관</a><a href="#"><b>개인정보처리방침</b></a><a href="#">문의하기</a></nav>
+      <span>© 2026 나지켜</span>
+    </div>
+  </div>
+</footer>
+
+<dialog id="dlg" aria-labelledby="dlgTitle">
+  <div class="dlg">
+    <span class="k" id="dlgCat"></span>
+    <h3 id="dlgTitle"></h3>
+    <p id="dlgBody"></p>
+    <button class="btn btn-dark close" id="dlgClose">닫기</button>
+  </div>
+</dialog>
+
+<script>
+(function(){
+  var C={food:'var(--food)',water:'var(--water)',workout:'var(--workout)',bowel:'var(--bowel)'};
+  function dotsFor(d){
+    var a=[];
+    if(d>12) return a;
+    if(d%3!==0) a.push(C.food);
+    if(d%2===0||d%5===1) a.push(C.water);
+    if(d%4===1||d%7===3) a.push(C.workout);
+    if(d%3===1) a.push(C.bowel);
+    return a;
+  }
+  // 2026년 11월 1일은 일요일
+  function buildCal(el,withWeekdays){
+    if(!el) return;
+    var html='';
+    if(withWeekdays){['일','월','화','수','목','금','토'].forEach(function(w){html+='<div class="wd">'+w+'</div>';});}
+    for(var i=0;i<35;i++){
+      var d=i+1;
+      if(d>30){html+='<div class="c empty"></div>';continue;}
+      var ds=dotsFor(d).map(function(c){return '<i style="background:'+c+'"></i>';}).join('');
+      html+='<div class="c'+(d===12?' today':'')+'"><span>'+d+'</span><div class="ds">'+ds+'</div></div>';
+    }
+    el.innerHTML=html;
+  }
+  buildCal(document.getElementById('miniCal'),true);
+  buildCal(document.getElementById('hlCal'),false);
+  buildCal(document.getElementById('bigCal'),true);
+
+  // QR placeholder pattern
+  var qr=document.getElementById('qr'),p='1111111100000110111011011101101110110000010111111';
+  qr.innerHTML=p.split('').map(function(b){return '<i'+(b==='0'?' class="w"':'')+'></i>';}).join('');
+
+  // mobile menu
+  var nav=document.getElementById('nav'),mb=document.getElementById('menuBtn');
+  mb.addEventListener('click',function(){var o=nav.classList.toggle('open');mb.setAttribute('aria-expanded',o);});
+  nav.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){nav.classList.remove('open');mb.setAttribute('aria-expanded','false');});});
+
+  // active nav on scroll
+  var links=[].slice.call(nav.querySelectorAll('a'));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'));});
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){var i=secs.indexOf(e.target);links.forEach(function(l,j){l.classList.toggle('on',j===i);});}});},{rootMargin:'-45% 0px -50% 0px'});
+  secs.forEach(function(s){if(s) io.observe(s);});
+
+  // carousel
+  var track=document.getElementById('track'),slides=[].slice.call(track.children),dots=document.getElementById('dots');
+  slides.forEach(function(s,i){var b=document.createElement('button');b.setAttribute('role','tab');b.setAttribute('aria-label',(i+1)+'번째 기능');b.addEventListener('click',function(){go(i);});dots.appendChild(b);});
+  function step(){return slides[0].offsetWidth+20;}
+  function go(i){track.scrollTo({left:i*step(),behavior:'smooth'});}
+  function cur(){return Math.round(track.scrollLeft/step());}
+  function sync(){var c=Math.min(cur(),slides.length-1);[].forEach.call(dots.children,function(d,i){d.classList.toggle('on',i===c);d.setAttribute('aria-selected',i===c);});}
+  track.addEventListener('scroll',function(){window.requestAnimationFrame(sync);});
+  document.getElementById('prev').addEventListener('click',function(){go(Math.max(cur()-1,0));});
+  document.getElementById('next').addEventListener('click',function(){go(Math.min(cur()+1,slides.length-1));});
+  sync();
+
+  // detail modal
+  var dlg=document.getElementById('dlg');
+  document.querySelectorAll('.card button').forEach(function(b){
+    b.addEventListener('click',function(){
+      var k=document.getElementById('dlgCat');k.textContent=b.dataset.cat;k.style.color=b.dataset.color;
+      document.getElementById('dlgTitle').textContent=b.dataset.title;
+      document.getElementById('dlgBody').textContent=b.dataset.body;
+      if(dlg.showModal) dlg.showModal();
+    });
+  });
+  document.getElementById('dlgClose').addEventListener('click',function(){dlg.close();});
+  dlg.addEventListener('click',function(e){if(e.target===dlg) dlg.close();});
+
+  // FAQ filter
+  var tabs=document.getElementById('tabs');
+  tabs.addEventListener('click',function(e){
+    var b=e.target.closest('button');if(!b) return;
+    [].forEach.call(tabs.children,function(t){t.setAttribute('aria-selected',t===b);});
+    document.querySelectorAll('#qa details').forEach(function(d){d.hidden=!(b.dataset.f==='all'||d.dataset.c===b.dataset.f);});
+  });
+
+  // reveal on scroll
+  var rv=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');rv.unobserve(e.target);}});},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){rv.observe(el);});
+})();
+</script>
+
+</body></html>
